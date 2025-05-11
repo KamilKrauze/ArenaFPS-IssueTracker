@@ -2,6 +2,8 @@ name: Close Invalid Issues
 on:
   issues:
     types: [opened, edited]
+  schedule: 
+    - cron: "*/5 * * * *"
 
 jobs:
   close_invalid_issues:
