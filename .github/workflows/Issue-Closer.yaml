@@ -1,4 +1,4 @@
-name: Close Invalid Issues
+name: Say Hello!
 on:
   issues:
     types: [opened, edited]
@@ -8,58 +8,9 @@ on:
   
 
 jobs:
-  close_invalid_issues:
+  Close-Invalid-Issues:
     runs-on: self-hosted
     steps:
       - uses: actions/github-script@v7
         with:
-          script: |
-            const issue = context.payload.issue;
-            const body = issue.body?.trim() || '';
-            const templateMarkers = [
-              '### Description',
-              '### Steps to Reproduce',
-              '### Expected Behavior',
-              '### Actual Behavior'
-            ];
-
-            const spamKeywords = [
-              'buy now',
-              'free money',
-              'visit my site',
-              'work from home',
-              'click here',
-              'limited offer',
-              'http://',
-              'https://'
-            ];
-
-            function isEmpty(body) {
-              return body.length === 0;
-            }
-
-            function isSpam(body) {
-              return spamKeywords.some(keyword =>
-                body.toLowerCase().includes(keyword)
-              );
-            }
-
-            function usedTemplate(body) {
-              return templateMarkers.some(marker => body.includes(marker));
-            }
-
-            if (isEmpty(body) || isSpam(body) || !usedTemplate(body)) {
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-                state: 'closed'
-              });
-
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-                body: `This issue has been closed because it was either empty, identified as spam, or did not follow the required template. Please update and reopen if this was in error.`
-              });
-            }
+          script: echo 'Hello, whomever you are!'
