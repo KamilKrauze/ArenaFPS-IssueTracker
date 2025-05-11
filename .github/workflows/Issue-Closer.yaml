@@ -4,6 +4,8 @@ on:
     types: [opened, edited]
   schedule: 
     - cron: "*/5 * * * *"
+  workflow_dispatch:
+  
 
 jobs:
   close_invalid_issues:
